@@ -1,0 +1,46 @@
+<?php
+
+// implementation of hook_schema
+
+  function example_schema(){
+    $schema['custom_contact'] = array(
+        'description' => 'Table of custom message module.',
+        'fields' => array(
+          'sid' => array(
+            'description' => 'The identifier of the submission.',
+            'type' => 'serial',
+            'not null' => TRUE,
+            ),
+          'name' => array(
+            'description' => 'The name of the user.',
+            'type' => 'varchar',
+            'length' => 60,
+            'not null' => TRUE,
+            'default' => '',
+            ),
+          'email' => array(
+            'description' => 'The email of the user.',
+            'type' => 'varchar',
+            'length' => 100,
+            'not null' => TRUE,
+            'default' => '',
+            ),
+          'subject' => array(
+            'description' => 'The subject of the message.',
+            'type' => 'varchar',
+            'length' => 255,
+            'not null' => TRUE,
+            'default' => '',
+            ),
+          'message' => array(
+            'description' => 'The message itself.',
+            'type' => 'varchar',
+            'length' => 255,
+            'not null' => TRUE,
+            'default' => '',
+            ),
+          ),
+        'primary key' => array('sid'),
+      );
+  return $schema;
+  }
