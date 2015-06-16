@@ -61,9 +61,14 @@ class ExampleController extends ControllerBase {
         $output .= '<p><strong>Email: </strong>' . t($value->email) . '</p>';
         $output .= '<p><strong>Subject: </strong>' . t($value->subject) . '</p>';
         $output .= '<p><strong>Message: </strong>' . t($value->message) . '</p>';
-        $output .= '<p>'. \Drupal::l('Delete', new Url('example.delete', array('sid'=>$value->sid))) .'</p>';
-        return $output;
+      return array(
+        '#type' => 'markup',
+        '#markup' => $output,
+        );
       }
+    }
+    else{
+      return "YOLO";
     }
   }
 
