@@ -1,8 +1,24 @@
 example.content:
-  path: 'admin/config/content/messages'
+  path: 'admin/content/messages'
   defaults:
-    _controller: '\Drupal\example\Controller\ExampleController::content'
+    _content: '\Drupal\example\Controller\ExampleController::content'
     _title: 'Messages'
+  requirements:
+    _permission: 'administer site configuration'
+
+example.view:
+  path: 'admin/content/message/{sid}'
+  defaults:
+    _content: '\Drupal\example\Controller\ExampleController::view'
+    _title: 'View Message'
+  requirements:
+    _permission: 'administer site configuration'
+
+example.delete:
+  path: 'admin/content/message/{sid}/delete'
+  defaults:
+    _form: '\Drupal\example\Form\DeleteForm'
+    _title: 'Delete Message'
   requirements:
     _permission: 'administer site configuration'
 
