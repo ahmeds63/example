@@ -34,10 +34,9 @@
             ),
           'message' => array(
             'description' => 'The message itself.',
-            'type' => 'varchar',
-            'length' => 255,
+            'type' => 'text',
             'not null' => TRUE,
-            'default' => '',
+            'size' => 'big',
             ),
           'created' => array(
             'mysql_type' => 'timestamp',
