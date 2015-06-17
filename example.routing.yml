@@ -7,7 +7,7 @@ example.content:
     _permission: 'administer site configuration'
 
 example.view:
-  path: 'admin/content/message/{sid}'
+  path: 'admin/content/messages/{sid}'
   defaults:
     _controller: '\Drupal\example\Controller\ExampleController::view'
     _title: 'View Message'
