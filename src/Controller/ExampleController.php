@@ -56,10 +56,12 @@ class ExampleController extends ControllerBase {
         ->condition('sid', $sid)
         ->execute();
       foreach ($results as $key => $value) {
+        $date = strtotime($value->created);
         $output = '';
         $output .= '<p><strong>Name: </strong>' . t($value->name) . '</p>';
         $output .= '<p><strong>Email: </strong>' . t($value->email) . '</p>';
         $output .= '<p><strong>Subject: </strong>' . t($value->subject) . '</p>';
+        $output .= '<p><strong>Sent On: </strong>' . date('d F, Y | h:i:s A', $date) . '</p>';
         $output .= '<p><strong>Message: </strong>' . t($value->message) . '</p>';
       return array(
         '#type' => 'markup',
