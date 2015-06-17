@@ -7,6 +7,7 @@
 namespace Drupal\example\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ExampleController extends ControllerBase {
 
@@ -63,14 +64,20 @@ class ExampleController extends ControllerBase {
         $output .= '<p><strong>Subject: </strong>' . t($value->subject) . '</p>';
         $output .= '<p><strong>Sent On: </strong>' . date('d F, Y | h:i:s A', $date) . '</p>';
         $output .= '<p><strong>Message: </strong>' . t($value->message) . '</p>';
+        $output .= '<p>' . \Drupal::l('Delete', new Url('example.delete_form', array('sid'=>$value->sid))) . '</p>';
       return array(
         '#type' => 'markup',
         '#markup' => $output,
+        '#attached' => array(
+            'library' => array(
+              'example/example.lib',
+            ),
+          ),
         );
       }
     }
     else{
-      return "YOLO";
+      return new RedirectResponse(\Drupal::url('example.content'));
     }
   }
 

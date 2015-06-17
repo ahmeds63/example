@@ -1,0 +1,11 @@
+example.lib:
+  version: VERSION
+  js:
+    js/example.module.js: {}
+  css:
+    theme:
+      css/example.module.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupal.ajax
