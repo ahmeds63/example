@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\example\Form\MyForm.
+ * Contains \Drupal\example\Form\ContactForm.
  */
 
 namespace Drupal\example\Form;
@@ -13,7 +13,7 @@ use Drupal\Component\Utility\UrlHelper;
 /**
  * My Form.
  */
-class MyForm extends FormBase {
+class ContactForm extends FormBase {
   /**
    * {@inheritdoc}
    */
