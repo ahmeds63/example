@@ -3,6 +3,7 @@ example.content:
   defaults:
     _controller: '\Drupal\example\Controller\ExampleController::content'
     _title: 'Messages'
+    type: 'new'
   requirements:
     _permission: 'administer site configuration'
 

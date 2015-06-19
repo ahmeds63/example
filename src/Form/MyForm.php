@@ -47,7 +47,8 @@ class MyForm extends FormBase {
     $form['message'] = array(
       '#type' => 'textarea',
       '#title' => t('Message'),
-      '#required' => TRUE
+      '#required' => TRUE,
+      '#attributes' => array('class' => array('ckeditor')),
     );
     $form['submit'] = array(
       '#type' => 'submit',

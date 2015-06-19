@@ -1,0 +1,11 @@
+example.content: # The first plugin ID
+  title: 'Messages'
+  route_name: example.content
+  base_route: system.admin_content
+  weight: 5
+
+example.view: # The first plugin ID
+  title: 'Message'
+  route_name: example.view
+  base_route: example.view
+  weight: 0

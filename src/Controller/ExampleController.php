@@ -5,9 +5,10 @@
  */
 
 namespace Drupal\example\Controller;
-use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Form\FormBuilderInterface;
+use Drupal\Core\Url;
 
 class ExampleController extends ControllerBase {
 
@@ -17,14 +18,15 @@ class ExampleController extends ControllerBase {
   public function content() {
     $build = array(
       '#type' => 'markup',
-      '#markup' => t('Here, you will all the submissions from custom contact module.'),
+      '#markup' => t('Here, you will see all the submissions from custom contact module.'),
     );
 
     $header = array(
       'id' => t('ID'),
-      'name' => t('Name'),
+      'name' => t('Email'),
       'subject' => t('Subject'),
-      'actions' => t('Actions'),
+      'view' => t('View'),
+      'delete' => t('Delete'),
       );
 
     $rows = array();
@@ -32,7 +34,13 @@ class ExampleController extends ControllerBase {
     $results = db_query('SELECT * FROM {custom_contact}');
     foreach ($results as $key => $value) {
       $rows[] = array(
-        'data' => array($key, $value->name, $value->subject, \Drupal::l('View Message', new Url('example.view', array('sid'=>$value->sid)))),
+        'data' => array(
+          $key,
+          $value->email,
+          $value->subject,
+          \Drupal::l('View Message', new Url('example.view', array('sid'=>$value->sid))),
+          \Drupal::l('Delete Message', new Url('example.delete_form', array('sid'=>$value->sid))),
+          ),
         );
     }
 
@@ -64,7 +72,7 @@ class ExampleController extends ControllerBase {
         $output .= '<p><strong>Subject: </strong>' . t($value->subject) . '</p>';
         $output .= '<p><strong>Sent On: </strong>' . date('d F, Y | h:i:s A', $date) . '</p>';
         $output .= '<p><strong>Message: </strong>' . t($value->message) . '</p>';
-        $output .= '<p>' . \Drupal::l('Delete', new Url('example.delete_form', array('sid'=>$value->sid))) . '</p>';
+        $output .= '<p class="delete button">' . \Drupal::l('Delete', new Url('example.delete_form', array('sid'=>$value->sid))) . '</p>';
       return array(
         '#type' => 'markup',
         '#markup' => $output,
