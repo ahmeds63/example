@@ -4,4 +4,4 @@ description: 'Example for Drupal 8 modules.'
 package: Custom
 version: 8.x
 core: 8.x
-configure: example.content
+configure: example.config

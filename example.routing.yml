@@ -3,7 +3,6 @@ example.content:
   defaults:
     _controller: '\Drupal\example\Controller\ExampleController::content'
     _title: 'Messages'
-    type: 'new'
   requirements:
     _permission: 'administer site configuration'
 
@@ -28,5 +27,22 @@ example.delete_form:
   defaults:
     _form: '\Drupal\example\Form\DeleteForm'
     _title: 'Delete Message'
+  requirements:
+    _permission: 'administer site configuration'
+
+example.delete_all:
+  path: 'admin/content/messages/delete'
+  defaults:
+    _form: '\Drupal\example\Form\DeleteAllForm'
+    _title: 'Delete Messages'
+  requirements:
+    _permission: 'administer site configuration'
+
+example.config:
+  path: 'admin/config/content/contact'
+  defaults:
+    _form: '\Drupal\example\Form\ConfigForm'
+    _title: 'Contact'
+    type: new
   requirements:
     _permission: 'administer site configuration'
