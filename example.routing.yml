@@ -15,7 +15,7 @@ example.view:
     _permission: 'administer site configuration'
 
 example.contact_form:
-  path: 'd8-contact'
+  path: 'example-contact'
   defaults:
     _form: '\Drupal\example\Form\ContactForm'
     _title: 'Custom Contact Form Drupal 8'
