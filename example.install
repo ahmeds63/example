@@ -45,5 +45,22 @@
           ),
         'primary key' => array('sid'),
       );
+    $schema['custom_contact_config'] = array(
+        'description' => 'Table of custom message module.',
+        'fields' => array(
+          'cid' => array(
+            'description' => 'The identifier of the submission.',
+            'type' => 'serial',
+            'not null' => TRUE,
+            ),
+          'form_description' => array(
+            'description' => 'The description of the form.',
+            'type' => 'text',
+            'not null' => TRUE,
+            'size' => 'big',
+            ),
+          ),
+        'primary key' => array('cid'),
+      );
   return $schema;
   }

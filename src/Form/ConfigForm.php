@@ -31,7 +31,9 @@ class ConfigForm extends FormBase {
       );
     $form['contact_text'] = array(
       '#type' => 'textarea',
-      '#title' => t('Custom Text')
+      '#title' => t('Custom Text'),
+      '#default_value' => t($this->defaultValue()),
+      '#required' => true
     );
     $form['submit'] = array(
       '#type' => 'submit',
@@ -55,18 +57,39 @@ class ConfigForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    debug($form_state);
     // Storing form data to database.
-    $data = array(
-      'contact_text' => $form_state->getValue('contact_text'),
-      );
-    $table = 'contact_config';
-    $query = db_insert($table)->fields($data)->execute();
-    if ($query) {
-      drupal_set_message(t('Configuration saved.'));
+    $data = $form_state->getValue('contact_text');
+    $table = 'custom_contact_config';
+    if ($this->exists()) {
+      $query = db_update($table)
+              ->fields(array('form_description' => $data))
+              ->condition('cid', 1)
+              ->execute();
+      drupal_set_message(t('Description updated.'));
+    }else{
+      $query = db_insert($table)->fields($data)->execute();
+      drupal_set_message(t('Description updated.'));
     }
-    else{
-      drupal_set_message(t('Internal Error!'), 'warning');
+  }
+
+  private function defaultValue(){
+    $result = db_select('custom_contact_config', 'form_description')
+        ->fields('form_description')
+        ->condition('cid', 1)
+        ->execute()
+        ->fetchAssoc();
+    return $result['form_description'];
+  }
+  private function exists(){
+    $result = db_select('custom_contact_config', 'form_description')
+        ->fields('form_description')
+        ->condition('cid', 1)
+        ->execute()
+        ->fetchAssoc();
+    if (!empty($result['form_description'])) {
+      return true;
+    }else{
+      return false;
     }
   }
 }

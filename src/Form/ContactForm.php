@@ -67,7 +67,7 @@ class ContactForm extends FormBase {
       $form_state->setErrorByName('email', $this->t('The email is not valid.'));
     }
     // Validating subject length
-    if (strlen($form_state->getValue('subject')) < 5) {
+    if (strlen($form_state->getValue('subject')) < 3) {
       $form_state->setErrorByName('subject', $this->t('The subject is too short.'));
     }
     // Validating message length
