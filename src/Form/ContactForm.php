@@ -27,7 +27,7 @@ class ContactForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['markup'] = array(
       '#type' => 'markup',
-      '#markup' => t('This is a custom contact form.'),
+      '#markup' => t($this->getDescription()),
       );
     $form['name'] = array(
       '#type' => 'textfield',
@@ -95,5 +95,14 @@ class ContactForm extends FormBase {
     else{
       drupal_set_message(t('Internal Error! message sending failed.'), 'warning');
     }
+  }
+
+  private function getDescription(){
+    $result = db_select('custom_contact_config', 'form_description')
+        ->fields('form_description')
+        ->condition('cid', 1)
+        ->execute()
+        ->fetchAssoc();
+    return $result['form_description'];
   }
 }
