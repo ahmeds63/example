@@ -8,6 +8,9 @@ namespace Drupal\example\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Html;
 
 
 /**
@@ -91,5 +94,39 @@ class ConfigForm extends FormBase {
     }else{
       return false;
     }
+  }
+  private function example_mail($key, &$message, $params) {
+    $options = array(
+      'langcode' => $message['langcode'],
+    );
+    switch ($key) {
+      case 'form_submit':
+        $message['from'] = \Drupal::config('system.site')->get('mail');
+        $message['subject'] = t('Your mail subject Here: @title', array('@title' => $params['title']), $options);
+        $message['body'][] = Html::escape($params['message']);
+        break;
+    }
+  }
+  private function example_mail_to_admin() {
+    $mailManager = \Drupal::service('plugin.manager.mail');
+    $module = 'example';
+    $key = 'form_submit'; // Replace with Your key
+    $to = 'ahmed.raza@square63.com';
+    $params['message'] = 'Message of the custom email of the drupal 8 goes here.';
+    $params['title'] = 'Drupal 8 Example Module Mail';
+    $langcode = \Drupal::currentUser()->getPreferredLangcode();
+    $send = true;
+
+    $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+    if ($result['result'] != true) {
+      $message = t('There was a problem sending your email notification to @email.', array('@email' => $to));
+      drupal_set_message($message, 'error');
+      \Drupal::logger('mail-log')->error($message);
+      return;
+    }
+
+    $message = t('An email notification has been sent to @email ', array('@email' => $to));
+    drupal_set_message($message);
+    \Drupal::logger('mail-log')->notice($message);
   }
 }

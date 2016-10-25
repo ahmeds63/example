@@ -48,7 +48,7 @@ class ContactForm extends FormBase {
       '#type' => 'textarea',
       '#title' => t('Message'),
       '#required' => TRUE,
-      '#attributes' => array('class' => array('ckeditor')),
+      // '#attributes' => array('class' => array('ckeditor')),
     );
     $form['submit'] = array(
       '#type' => 'submit',
@@ -61,7 +61,7 @@ class ContactForm extends FormBase {
   /**
    * {@inheritdoc}
    */
- public function validateForm(array &$form, FormStateInterface $form_state) {
+  public function validateForm(array &$form, FormStateInterface $form_state) {
     // Validating email address
     if (!valid_email_address($form_state->getValue('email'))) {
       $form_state->setErrorByName('email', $this->t('The email is not valid.'));
@@ -79,7 +79,7 @@ class ContactForm extends FormBase {
   /**
    * {@inheritdoc}
    */
- public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     // Storing form data to database.
     $data = array(
       'name' => $form_state->getValue('name'),
