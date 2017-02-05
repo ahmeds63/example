@@ -111,9 +111,11 @@ class ContactForm extends FormBase {
     $mailManager = \Drupal::service('plugin.manager.mail');
     $module = 'example';
     $key = 'contact_submit';
-    $to = 'raza1778@gmail.com';
+    $to = 'ahmed.raza@square63.com';
     $params['message'] = t($data['message']);
-    $params['node_title'] = t($data['name']);
+    $params['subject'] = t($data['subject']);
+    $params['name'] = t($data['name']);
+    $params['email'] = t($data['email']);
     $langcode = \Drupal::currentUser()->getPreferredLangcode();
     $send = true;
 
