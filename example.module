@@ -4,3 +4,15 @@
  * Example custom module for Drupal 8.
  * @author Ahmed Raza
  */
+function example_mail($key, &$message, $params) {
+  $options = array(
+    'langcode' => $message['langcode'],
+    );
+  switch ($key) {
+    case 'contact_submit':
+    $message['from'] = \Drupal::config('system.site')->get('mail');
+    $message['subject'] = t('Contact Submission: @title', array('@title' => $params['node_title']), $options);
+    $message['body'][] = $params['message'];
+    break;
+  }
+}

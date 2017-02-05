@@ -90,6 +90,7 @@ class ContactForm extends FormBase {
     $table = 'custom_contact';
     $query = db_insert($table)->fields($data)->execute();
     if ($query) {
+      $this->sendMail($data);
       drupal_set_message(t('Your message has been sent.'));
     }
     else{
@@ -104,5 +105,21 @@ class ContactForm extends FormBase {
         ->execute()
         ->fetchAssoc();
     return $result['form_description'];
+  }
+
+  private function sendMail($data){
+    $mailManager = \Drupal::service('plugin.manager.mail');
+    $module = 'example';
+    $key = 'contact_submit';
+    $to = 'raza1778@gmail.com';
+    $params['message'] = t($data['message']);
+    $params['node_title'] = t($data['name']);
+    $langcode = \Drupal::currentUser()->getPreferredLangcode();
+    $send = true;
+
+    $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+    if ($result['result'] !== true) {
+      drupal_set_message(t('There was a problem sending your message and it was not sent.'), 'error');
+    }
   }
 }
