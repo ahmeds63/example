@@ -33,9 +33,10 @@ class ConfigForm extends FormBase {
       '#markup' => t('Enter the text to be shown above the form.'),
       );
     $form['contact_text'] = array(
-      '#type' => 'textarea',
+      '#type' => 'text_format',
       '#title' => t('Custom Text'),
       '#default_value' => $this->defaultValue() ? t($this->defaultValue()) : '',
+      '#format'=> 'full_html',
       '#required' => true
     );
     $form['submit'] = array(
@@ -51,7 +52,8 @@ class ConfigForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     // Validating message length
-    if (strlen($form_state->getValue('contact_text')) < 5) {
+    $description = $form_state->getValue('contact_text');
+    if (strlen($description['value']) < 20) {
       $form_state->setErrorByName('contact_text', $this->t('The text is too short.'));
     }
   }
@@ -61,7 +63,8 @@ class ConfigForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Storing form data to database.
-    $data = array('form_description' => $form_state->getValue('contact_text'));
+    $description = $form_state->getValue('contact_text');
+    $data = array('form_description' => $description['value']);
     $table = 'custom_contact_config';
     if ($this->exists()) {
       $query = db_update($table)
