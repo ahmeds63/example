@@ -25,10 +25,14 @@ class ContactForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['markup'] = array(
-      '#type' => 'markup',
-      '#markup' => t($this->getDescription()),
-      );
+    if ($this->getDescription()) {
+      $form['markup'] = array(
+        '#type' => 'markup',
+        '#prefix' => '<div class="markup-wrapper">',
+        '#markup' => t($this->getDescription()),
+        '#suffix' => '</div>',
+        );
+    }
     $form['name'] = array(
       '#type' => 'textfield',
       '#title' => t('Name'),
@@ -48,11 +52,16 @@ class ContactForm extends FormBase {
       '#type' => 'textarea',
       '#title' => t('Message'),
       '#required' => TRUE,
+      '#prefix' => '<div class="form-group">',
+      '#suffix' => '</div>',
       // '#attributes' => array('class' => array('ckeditor')),
     );
-    $form['submit'] = array(
+    $form['actions']['contact_submit'] = array(
       '#type' => 'submit',
       '#value' => t('Send'),
+      '#attributes' => array(
+        'class'=>array('btn btn-primary')
+        ),
     );
     return $form;
   }

@@ -35,7 +35,7 @@ class ConfigForm extends FormBase {
     $form['contact_text'] = array(
       '#type' => 'textarea',
       '#title' => t('Custom Text'),
-      '#default_value' => t($this->defaultValue()),
+      '#default_value' => $this->defaultValue() ? t($this->defaultValue()) : '',
       '#required' => true
     );
     $form['submit'] = array(
@@ -61,11 +61,11 @@ class ConfigForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Storing form data to database.
-    $data = $form_state->getValue('contact_text');
+    $data = array('form_description' => $form_state->getValue('contact_text'));
     $table = 'custom_contact_config';
     if ($this->exists()) {
       $query = db_update($table)
-              ->fields(array('form_description' => $data))
+              ->fields($data)
               ->condition('cid', 1)
               ->execute();
       drupal_set_message(t('Description updated.'));
