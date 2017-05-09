@@ -1,3 +1,11 @@
+example.contact_form:
+  path: 'example-contact'
+  defaults:
+    _form: '\Drupal\example\Form\ContactForm'
+    _title: 'Custom Contact Form Drupal 8'
+  requirements:
+    _permission: 'access content'
+
 example.content:
   path: 'admin/content/messages'
   defaults:
@@ -13,14 +21,6 @@ example.view:
     _title: 'View Message'
   requirements:
     _permission: 'administer site configuration'
-
-example.contact_form:
-  path: 'example-contact'
-  defaults:
-    _form: '\Drupal\example\Form\ContactForm'
-    _title: 'Custom Contact Form Drupal 8'
-  requirements:
-    _permission: 'access content'
 
 example.delete_form:
   path: 'admin/content/messages/{sid}/delete'
