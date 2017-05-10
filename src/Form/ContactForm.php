@@ -49,12 +49,12 @@ class ContactForm extends FormBase {
       '#required' => TRUE
     );
     $form['message'] = array(
-      '#type' => 'textarea',
+      '#type' => 'text_format',
       '#title' => t('Message'),
       '#required' => TRUE,
       '#prefix' => '<div class="form-group">',
       '#suffix' => '</div>',
-      // '#attributes' => array('class' => array('ckeditor')),
+      '#format' => 'contact_form',
     );
     $form['actions']['contact_submit'] = array(
       '#type' => 'submit',
