@@ -2,5 +2,5 @@ name: Drupal 8 custom module example
 description: 'Example for Drupal 8 modules.'
 type: module
 package: Custom
-core: 8.x
+core_version_requirement: ^8.8 || ^9 || ^10
 configure: example.config
